@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>RSS Feedmail</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+</head>
+
+<body>
+ <form action="/send" method= "POST" novalidate="True">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+
+      <!--LOGO-->
+      <a class="navbar-brand" href="">
+      <img src="/images/logo.png" width="35" height="35" alt="rssLogo">
+        RSS Feedmail
+      </a>
+
+
+
+      <!-- PRZYCISKI-->
+
+      <div>
+        <button class="btn btn-sm btn-outline-secondary" type="submit" id="savebtn">Save</button>
+        <button class="btn btn-sm btn-outline-secondary" type="button" id="previewbtn">Preview</button>
+        <button class="btn btn-outline-success me-2" type="button" id="sendbtn">SEND</button>
+
+      </div>
+    </div>
+  </nav>
+  <!--Koniec paska menu u góry strony-->
+
+  <br>
+
+  <!--Początek lewej strony-->
+  <div class="row">
+    <div class="col-md-6">
+      <h6>Adres e-mail:</h6>
+
+      <div class="card card-body">
+              <div class="col-md-12 col-12">
+                <!-- Email -->
+
+                      <div class="form-group">
+                          <input type="email" class="form-control" id="e-mail" name="email" placeholder="nazwisko_nralbumu@cloud.wsb.wroclaw.pl">
+                          <small id="emailHelp" class="form-text text-muted">Twoje dane zostoną przekazane FBI, CIA, FIS, KGB i gdzie się tylko da :(</small>
+                      </div>
+
+              </div>
+      </div>
+
+        <hr>
+
+      <div class="card card-body">
+          <div class="col-md-12 col-10" id="iframe">
+            <table class="table table-sm">
+            <!--Miejsce na wrzut RSS       TZW. IFRAME-->
+              <tr>
+                <iframe id="encoder_iframe" height="700" width="100" src="">
+                </iframe>
+              <br>
+              </tr>
+            </table>
+          </div>
+      </div>
+    </div>
+  <!--Koniec lewej strony-->
+
+
+
+  <!--Początek prawej strony-->
+    <div class="col-md-6">
+      <h6>RSS Url</h6>
+          <!--Początek RSS URL-->
+          <div class="card card-body">
+              <div class="col-md-12 col-6">
+                      <div class="form-group">
+                          <input type="url" name="rss" id="url"
+                              placeholder="https://jakisprzyklad.pl"
+                              pattern="https://.*" size="80"
+                              required
+                          >
+                          <button type="button" id="btn"> Dodaj </button>
+                          <button type="button" id="btn2"> Wyczyść listę </button>
+                      </div>
+              </div>
+          </div>
+          <!--Koniec RSS url-->
+      <hr>
+          <!--Początek sekcji RSS-->
+          <section class="container">
+              <div class="card text-white bg-dark mb-3" style="max-width: 55rem;">
+                  <div class="card-body">
+                      <h5 class="card-title"></h5>
+                      <p class="card-text">RSS</p>
+                      <div id="lsOutput" ></div>
+                      <div id="bodycontent" name="bodycontent"></div>
+                  </div>
+              </div>
+
+          </section>
+          <!--Koniec sekcji RSS-->
+    </div>
+
+
+  </div>
+  </form>
+  <script src= "/javascript/events.js" >
+  </script>
+</body>
+</html>
