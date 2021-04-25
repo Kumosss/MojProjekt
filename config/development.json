@@ -1,14 +1,33 @@
+
+
 {
-    "port": 8080,
+
+    "port": "8000",
+
+
+
     "db": {
-        "url": "mongodb://localhost:27017",
-        "name": "dev",
-        "options": {
-            "useUnifiedTopology": true
+
+        "url":"mongodb://127.0.0.1:27017",
+
+        "name":"node",
+
+        "collection": "feeds",
+
+        "Options":{
+
+            "undefinedTopology": true
+
         }
+
     },
+
     "mailGun": {
-        "api_key": "800e91fdfcb5f8289bc7e457d0ba4dcb-71b35d7e-e8e6d818",
-        "domain": "sandboxb95030ee4064481cb14c84149aa6cf38.mailgun.org"
+
+    "api_key": "800e91fdfcb5f8289bc7e457d0ba4dcb-71b35d7e-e8e6d818",
+
+    "domain": "sandboxb95030ee4064481cb14c84149aa6cf38.mailgun.org"
+
     }
+
 }
