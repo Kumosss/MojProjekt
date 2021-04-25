@@ -9,7 +9,7 @@ const fetch = require('node-fetch')
 // Łączność z bazą
 const DB = require('./storage/db')
 const db = new DB()
-db.connect(config.db)
+db.connect(config.get("db"))
 
 
 
@@ -71,7 +71,7 @@ app.get('/send', async (req,res) => {
 
 app.get('/api/v1/mail', async (req,res) => {
     try{
-        const htmlContent = await mailController.build(req.query.email) 
+        const htmlContent = await mailController.build(req.query.email)
         res.send(htmlContent)
     }catch (e) {
         console.log(e)
