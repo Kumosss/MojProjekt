@@ -18,5 +18,5 @@ class feedParser {
         return Promise.all(promieses)        
     }
 }
-
+    
 module.exports = feedParser

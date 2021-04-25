@@ -1,9 +1,4 @@
 exports.notFound = (req,res, next) => {
-    const err = new Error('404 - nie odnaleziono strony')
+    const err = new Error('404 - stronie nie została odnaleziona')
     next(err)
 }
-
-// exports.catchErrors = (err, req, res, next) => {
-//     res.status(err.status || 500)
-//     console.log(err.status)
-// }

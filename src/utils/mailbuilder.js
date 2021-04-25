@@ -1,6 +1,4 @@
 const mjml2html = require( 'mjml')
-//import mjml2html from 'mjml'
-
 class MailBuilder{
     
     constructor(feed){
@@ -30,5 +28,4 @@ class MailBuilder{
         `, options)
     }   
 }
-
 module.exports= MailBuilder
