@@ -10,7 +10,7 @@
         }
     },
     "mailGun": {
-    "api_key": "5ddbb8683bf002a8dea5bf89ff90517c-71b35d7e-5c43143f",
-    "domain": "sandboxdf365effcf704bd4a5a88720d790cac9.mailgun.org"
+        "api_key": "4b1aa784-f5ea229f",
+        "domain": "sandboxd8bd75e5a7d94145b6e5d58a259f9142.mailgun.org"
+        }
     }
-}
