@@ -7,7 +7,7 @@
 </head>
 
 <body>
- <form action="/send" method= "POST" novalidate="True">
+
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
 
@@ -22,9 +22,9 @@
       <!-- Przycisk -->
 
       <div>
-        <button class="btn btn-sm btn-outline-secondary" type="submit" id="savebtn">Save</button>
-        <button class="btn btn-sm btn-outline-secondary" type="button" id="previewbtn">Preview</button>
-        <button class="btn btn-outline-success me-2" type="button" id="sendbtn">Send</button>
+        <button class="btn btn-sm btn-outline-secondary" type="submit" id="savebtn" onclick="saveChanges()">Save</button>
+        <button class="btn btn-sm btn-outline-secondary" type="button" id="preview_btn" onclick="getPreview()">Preview</button>
+        <button class="btn btn-outline-success me-2" type="button" onclick="sendMail()" id="send_btn">Send</button>
 
       </div>
     </div>
@@ -80,7 +80,7 @@
                               pattern="https://.*" size="80"
                               required
                           >
-                          <button type="button" id="btn"> Add </button>
+                          <button type="button" id="btn" id="add_rss_btn" onclick="addRssFromInput()"> Add </button>
                           <button type="button" id="btn2"> Clear </button>
                       </div>
               </div>
@@ -93,8 +93,9 @@
                   <div class="card-body">
                       <h5 class="card-title"></h5>
                       <p class="card-text">RSS</p>
-                      <div id="lsOutput" ></div>
-                      <div id="bodycontent" name="bodycontent"></div>
+                      <ul class="list-group list-group-flush" id="list_rss"></ul>
+                      <!--<div id="lsOutput" ></div>
+                      <div id="bodycontent" name="bodycontent"></div>-->
                   </div>
               </div>
 
@@ -104,7 +105,6 @@
 
 
   </div>
-  </form>
   <script src= "/javascript/events.js" >
   </script>
 </body>

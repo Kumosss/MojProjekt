@@ -1,56 +1,130 @@
-const inptRss = document.getElementById("url")
-const btnInsert = document.getElementById("btn")
-const lsOutput = document.getElementById("lsOutput")
-const bodycontent = document.getElementById("bodycontent")
-const btnDelete = document.getElementById("btn2")
-const saveBtn = document.getElementById("savebtn")
-const previewBtn = document.getElementById("previewbtn")
-const sendBtn = document.getElementById("sendbtn")
-const email = document.getElementById('e-mail')
+// eslint-disable-next-line no-unused-vars
+function saveChanges () {
+const email = document.getElementById('e-mail').value
+email.readOnly = true
+const rss = []
 
-const rssKey = "rss"
-const urls = []
-
-btnInsert.onclick = async function() {
-    const value = inptRss.value
-    if(!value){
-        alert('Wprowadź url nim klikniesz "Dodaj"!')
-        return
-    } else {
-
-
-        lsOutput.innerHTML+=`<div class = "lsOutput">${value} </div>`
-        const urlsToSend = document.querySelectorAll('.lsOutput');
-
-        for(let urlToSend of urlsToSend){
-            await urls.push(urlToSend.innerHTML)
-            localStorage.setItem(rssKey,urls)
-        }
-        return Promise.all(urls)
-    }   
-}
-
-btnDelete.onclick = function() {
-    localStorage.clear()
-    location.reload()
-}
-
-saveBtn.onclick = function() {
-    try{
-        email.readOnly = true
-        rssValue = urls
-        emailValue = email.innerHTML
-        content = JSON.stringify(emailValue)
-        const data ={ content, rssValue }
-        const options = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        }
-        fetch('/send',options)
-    } catch (e){
-        console.log(e.message+ 'error')
+document.getElementById('list_rss').childNodes.forEach(elem => {
+    if (!elem.id) {
+    return
     }
+    rss.push(elem.id)
+})
+
+const content = {
+    email: email,
+    rss: rss
 }
+
+fetch('/v1/user', {
+    method: 'POST',
+    headers: {
+    Accept: 'application/json, text/plain, */*',
+    'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(content)
+})
+    .then((res) => {
+    if (res.status !== 200) {
+        alert('Failed to save data')
+        return
+    }
+    alert('Data was saved')
+    })
+    .catch((error) => {
+    alert('Request failed. ' + JSON.stringify(error))
+    })
+}
+
+function addRss (rss) {
+if (!rss) {
+    return
+}
+
+const ul = document.getElementById('list_rss')
+
+const li = document.createElement('li')
+li.setAttribute('id', rss)
+li.setAttribute('class', 'list-group-item')
+
+const a = document.createElement('a')
+a.setAttribute('class', 'fa fa-trash-o mr-2 fa-1.5x')
+a.setAttribute('onclick', "deleteRss('" + rss + "')")
+
+li.appendChild(a)
+li.appendChild(document.createTextNode(rss))
+ul.appendChild(li)
+}
+
+// eslint-disable-next-line no-unused-vars
+function addRssFromInput () {
+addRss(document.getElementById('url').value)
+document.getElementById('url').value = ''
+}
+
+// eslint-disable-next-line no-unused-vars
+function deleteRss (id) {
+const ul = document.getElementById('list_rss')
+const li = document.getElementById(id)
+
+ul.removeChild(li)
+}
+
+// eslint-disable-next-line no-unused-vars
+function sendMail () {
+const email = document.getElementById('e-mail').value
+
+fetch(`/v1/mail?email=${email}`, {
+    method: 'POST'
+})
+    .then(res => {
+    return res.text()
+    })
+    .catch((error) => {
+    alert('Request failed.' + JSON.stringify(error))
+    })
+}
+
+// eslint-disable-next-line no-unused-vars
+function getPreview () {
+const email = document.getElementById('e-mail').value
+
+fetch(`/v1/mail?email=${email}`, {
+    method: 'GET'
+})
+    .then(res => {
+    return res.text()
+    })
+    .then(data => {
+    var doc = document.getElementById('encoder_iframe').contentWindow.document
+    doc.open()
+    doc.write(data)
+    doc.close()
+    })
+    .catch((error) => {
+    alert('Request failed.' + JSON.stringify(error))
+    })
+}
+
+function getData () {
+fetch(`/v1/user`, {
+    method: 'GET',
+    headers: {
+    'Content-type': 'application/json; charset=UTF-8'
+    }
+})
+    .then((res) => {
+    return res.json()
+    })
+    .then((data) => {
+    document.getElementById('e-mail').value = data.email
+    data.rss.forEach((rss) => {
+        addRss(rss)
+    })
+    })
+    .catch((error) => {
+    alert('Request failed. ' + JSON.stringify(error))
+    })
+}
+
+// window.onload = getData()

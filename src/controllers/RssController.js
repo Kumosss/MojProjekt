@@ -1,5 +1,3 @@
-const DB = require ('../../src/storage/db')
-const db = new DB()
 const config = require('config')
 
 function RssController(db) {

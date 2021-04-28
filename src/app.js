@@ -12,9 +12,12 @@ db.connect(config.db)
 
 const MailSender = require('./utils/mailSender')
 const MailBuilder = require('./utils/mailbuilder')
-const FeedParser = require('./utils/fp3')
+const FeedParser = require('./utils/fp2')
 const MailController = require('./controllers/MailController')
 const RssController = require('./controllers/RssController')
+
+const rssRoutes = require('./routes/rssroutes')
+const mailRoutes = require('./routes/mailroutes')
 
 const feedParser = new FeedParser()
 const mailSender = new MailSender()
@@ -28,45 +31,48 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.use(express.urlencoded({extended:false}));
 app.use(express.json());
 
-app.post('/send', async (req,res) => {
-    try{
-        console.log(req.body)
-        await db.insert("feeds", req.body)
-        res.status(200)
-    } catch (e){
-        console.error(e.message)
-    }
-})
+// app.post('/send', async (req,res) => {
+//     try{
+//         console.log(req.body)
+//         await db.insert("feeds", req.body)
+//         res.status(200)
+//     } catch (e){
+//         console.error(e.message)
+//     }
+// })
 
-app.get('/send', async (req,res) => {
-    try{
-        console.log('halo')
-        await db.find("feeds", req.body.email)
-        res.status(200).sendFile('./index.html')
-    } catch (e){
-        console.error(e.message)
-    }
+// app.get('/send', async (req,res) => {
+//     try{
+//         console.log('halo')
+//         await db.find("feeds", req.body.email)
+//         res.status(200).sendFile('./index.html')
+//     } catch (e){
+//         console.error(e.message)
+//     }
 
-})
+// })
 
 
-app.get('/api/v1/mail', async (req,res) => {
-    try{
-        const htmlContent = await mailController.build(req.query.email) 
-        res.send(htmlContent)
-    }catch (e) {
-        console.log(e)
-        res.sendStatus(500)
-    }
-})
+// app.get('/api/v1/mail', async (req,res) => {
+//     try{
+//         const htmlContent = await mailController.build(req.query.email) 
+//         res.send(htmlContent)
+//     }catch (e) {
+//         console.log(e)
+//         res.sendStatus(500)
+//     }
+// })
 
-app.post('/api/v1/mail', async (req,res) => {
-    try{
-        await mailController.send(req.query.email)
-        res.sendStatus(200)
-    } catch (e) {
-        console.log(e)
-        res.sendStatus(500)
-    }
-})
+// app.post('/api/v1/mail', async (req,res) => {
+//     try{
+//         await mailController.send(req.query.email)
+//         res.sendStatus(200)
+//     } catch (e) {
+//         console.log(e)
+//         res.sendStatus(500)
+//     }
+// })
+app.use('/v1', rssRoutes(rssController))
+app.use('/v1', mailRoutes(mailController))
+
 module.exports = app
